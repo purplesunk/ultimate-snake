@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}Menu{% endblock %}
+
+
+{% block main %}
+<div class="bg-dark settings-menu d-flex gap-3 flex-column justify-content-center container m-auto border-3 border border-dark-subtle p-3">
+    <h1 class="text-center mb-2">Ultimate Snake</h1>
+    <form action="/game" method="get">
+        <button class="btn btn-primary form-control">
+            Play game!
+        </button>
+    </form>
+    <form action="/settings" method="get">
+        <button class="btn btn-success form-control">
+            Settings
+        </button>
+    </form>
+    <form class="mb-auto" action="/scoreboard" method="get">
+        <button class="btn btn-danger form-control">
+            Your Scores
+        </button>
+    </form>
+    <form action="/shared-schemes" method="get">
+        <button class="btn btn-info form-control" type="submit">
+            Color schemes
+        </button>
+    </form>
+</div>
+{% endblock %}

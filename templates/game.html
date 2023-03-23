@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}Game{% endblock %}
+
+{% block main %}
+    <form action="/" class="position-absolute top-0 end-0">
+        <button class="btn-close btn-close-white me-2 m-auto"></button>
+    </form>
+    {% include "canvas.html" %}
+        <script>
+            const settings = {{ settings | tojson }};
+            const isSettings = false;
+            canvas.classList.add('center');
+        </script>
+    {% include "script.html" %}
+
+    <div class="flashes center bg-dark p-3 d-flex flex-column gap-2 text-light d-none">
+        <form>
+            <input id="score" name="score" type="hidden" value="0">
+            <p class="lead text-center">SCORE: </p>
+            <div class="input-group mb-3">
+                <label class="input-group-text">Name: </label>
+                <input id="name" name="name" type="text" class="form-control" placeholder="Your Name">
+            </div>
+            <input  type="submit" value="Save Score" class="btn btn-danger form-control" formaction="/scoreboard" formmethod="post">
+        </form>
+        <form>
+            <input  type="submit" value="Play Again!" class="btn btn-warning form-control" formaction="/game" formmethod="get">
+        </form><form><input type="submit" value="Main Menu" class="btn btn-info form-control" formaction="/" formmethod="get">
+        </form>
+    </div>
+
+    <script>
+        canvas.onload = startAnimating(settings.speed);
+    </script>
+{% endblock %}

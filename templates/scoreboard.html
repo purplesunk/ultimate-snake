@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+
+{% block title %}Scores{% endblock %}
+
+{% block main %}
+<div class="d-flex flex-column min-vh-100 scoreboard">
+<h1 class="h1 text-center mt-5 mb-0 border-bottom border-secondary p-3">Your Scores: </h1>
+<div class="bg-dark box overflow-auto text-center">
+    <table class="table table-dark table-striped">
+        <thead class="fs-5">
+            <tr class="">
+                <td>#</td>
+                <td>Name</td>
+                <td class="text-center">Deadly Walls</td>
+                <td>Speed</td>
+                <td>Grid Size</td>
+                <td>Score</td>
+                {% if editmode %}
+                <td>Delete</td>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody class="">
+            {% for score in scores %}
+                <tr>
+                    <td>
+                        {{ scores.index(score) + 1 }}
+                    </td>
+                    <td>
+                        {{ score['name'] }}
+                    </td>
+                    <td class="d-flex justify-content-center">
+                        {% if score['hardmode'] == 'on' %}
+                            <span>&#10003;</span>
+                        {% else %}
+                             <span>&#10007;</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ score['speed'] }}
+                    </td>
+                    <td>
+                        {{ score['grid_size'] }}
+                    </td>
+                    <td>
+                        {{ score['score'] }}
+                    </td>
+                    <td>
+                       {% if editmode %} 
+                        <form action="/delete-scores" method="post">
+                            <input type="hidden" id="score-delete" name="score-delete" value='{{ scores.index(score) }}'>
+                            <button type="submit"  class="btn-close btn-close-white me-2 m-auto"></button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="d-flex flex-row justify-content-around mt-auto p-5 border-top border-secondary">
+        <form action="/" method="get">
+            <button class="btn btn-info btn-lg" type="submit">
+                Main Menu
+            </button>
+        </form>
+
+        {% if editmode %}
+        <form action="/scoreboard" method="get">
+            {% if not game_played %}
+                <button type="submit" formmethod="get" class="btn btn-danger btn-lg">
+            {% else %}
+                <button type="submit" class="btn btn-danger btn-lg">
+            {% endif %}
+                Exit Delete mode
+            </button>
+        </form>
+        {% else %}
+        <form action="/delete-scores" method="get">
+            <button type="submit" class="btn btn-danger btn-lg">
+                Delete mode
+            </button>
+        </form>
+        {% endif %}
+        
+        {% if game_played %}
+        <form action="/game" method="get">
+            <button type="submit" class="btn btn-warning btn-lg">
+                Play Again!
+            </button>
+        </form>
+        {% endif %}
+</div>
+</div>    
+    
+{% endblock %}

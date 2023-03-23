@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=silkscreen:400" rel="stylesheet" />
+
+    <title> Ultimate Snake {% block title %}{% endblock %} </title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="static/favicon-16x16.png">
+    <link rel="manifest" href="/static/site.webmanifest"><link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+
+
+
+<body class="text-light min-vh-100 d-flex flex-column justify-content-center">
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes position-absolute mt-3 top-0 start-50 translate-middle-x">
+            {% for message in messages %}
+                <li>
+                    <div class="toast show align-items-center 
+                    {% if message == 'Settings saved.' or message == 'Settings submited.' or message == 'Color scheme saved.' %}
+                        text-bg-success 
+                    {% else %}
+                        text-bg-danger
+                    {% endif %}
+                        border-0 mb-1" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ message }}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+
+            <script>
+                function deleteToasts() {
+                    let toasts = document.querySelectorAll('.toast');
+                    for (let i = 0; i < toasts.length; i++) {
+                        toasts[i].classList.remove('show')
+                    }
+                }
+                setTimeout(_=> {
+                    deleteToasts();
+                }, 4000);
+            </script>
+        {% endif %}
+    {% endwith %}
+
+
+
+    {% block main %}{% endblock %} 
+
+
+</body>
+
+</html>

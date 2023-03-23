@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %}Color Schemes{% endblock %}
+
+{% block main %}
+    <div class="d-flex flex-column min-vh-100 scoreboard">
+    {% include "canvas.html" %}
+    <script>
+        const settings = {{ settings | tojson }};
+        const isSettings = true;
+    </script>
+    {% include 'script.html' %}
+    <script>
+        canvas.classList.add('d-none');
+    </script>
+    <div class="bg-dark">
+        <h1 class="h1 text-center mt-5 p-2">Shared Schemes</h1>
+
+        <input type="text" id="input" class="search form-control fs-4 bg-dark text-light border-0 mb-1" placeholder="Search..." aria-label="Search...">
+    </div>
+        <div class="box d-flex flex-wrap overflow-auto justify-content-center griding gap-4 p-4 border-top border-secondary">
+        </div>
+
+        <script>
+            let box = document.querySelector('.box');
+
+            document.querySelector('#input').addEventListener('input', () => getSchemes());
+
+            async function getSchemes() {
+                let response = await fetch('/search-schemes?q=' + input.value);
+                let schemes = await response.text();
+                box.innerHTML = schemes;
+                if (schemes != 'No results found.') drawImages();
+            }
+            getSchemes();
+
+            function drawImages() {
+                let collection = box.children
+                for (let i = 0; i < box.childElementCount; i++) {
+                    let img = collection[i].firstElementChild;
+                    snake.color = img.dataset.skColor.split(',');
+                    food.color = img.dataset.fdColor;
+                    hasStroke = img.dataset.stroke;
+                    hasGrid = img.dataset.grid;
+                
+                    img.style.backgroundColor = bgColor = img.dataset.bkgColor;
+
+                    drawSquares(20);
+                    drawCanvas();
+                    img.getContext('2d').drawImage(canvas, 0, 0);
+                }
+            }
+        </script>
+        <div class="bg-dark d-flex flex-row justify-content-around mt-auto p-5 border-top border-secondary">
+        <form action="/" method="get">
+            <button class="btn btn-info btn-lg" type="submit">
+                Main Menu
+            </button>
+        </form>
+        </div>
+    </div>
+
+{% endblock %}

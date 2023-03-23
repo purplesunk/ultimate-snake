@@ -1,0 +1,21 @@
+{% if not rows %}
+    No results found.
+{% endif %}
+{% for row in rows %}
+<div class="bg-dark border border-secondary p-2 scheme">
+    <canvas id="scheme-{{ row['id'] }}" 
+    data-sk-color="{{ row['snake_colors'] }}" 
+    data-fd-color="{{ row['food_color' ]}}" 
+    data-bkg-color="{{ row['bg_color'] }}" 
+    data-grid="{{ row['grid'] }}" 
+    data-stroke="{{ row['stroke'] }}" 
+    class="border-3 border">
+    </canvas>
+    <p class="lead mb-0 text-nowrap overflow-hidden"> {{ row['title'] }} </p> 
+    <p class="fs-6 text-light-emphasis mb-2 text-nowrap overflow-hidden"> by {{ row['user'] }} </p>
+    <form action="/copy-scheme" method="post">
+        <input type="hidden" id="scheme-id" name="scheme-id" value="{{ row['id'] }}">
+        <button class="btn btn-primary form-control" type="submit">Copy Color Scheme</button>
+    </form>
+</div>
+{% endfor %}
