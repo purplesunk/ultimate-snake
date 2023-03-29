@@ -166,3 +166,7 @@ def delete_scores():
         return redirect('/delete-scores')
 
     return render_template('scoreboard.html', scores=session['user']['scores'], game_played=session['game_played'], editmode=True)
+
+
+if __name__ == "__main__":
+    app.run(debug=False, host='0.0.0.0')
