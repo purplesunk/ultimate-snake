@@ -48,10 +48,10 @@ let score = 0;
 const snake = {
     color: settings['snake_colors'],
     body: [
-        { x: canvas.width / 2,  y: canvas.height / 2, width: SQUARE_SIZE, height: SQUARE_SIZE }, 
-        { x: (canvas.width / 2) - SQUARE_SIZE, y: (canvas.height / 2), width: SQUARE_SIZE, height: SQUARE_SIZE }, 
-        { x: (canvas.width / 2) - SQUARE_SIZE * 2, y: canvas.height / 2, width: SQUARE_SIZE, height: SQUARE_SIZE },
-        { x: (canvas.width / 2) - SQUARE_SIZE * 3, y: canvas.height / 2, width: SQUARE_SIZE, height: SQUARE_SIZE }
+        { x: canvas.width / 2,  y: canvas.height / 2 }, 
+        { x: (canvas.width / 2) - SQUARE_SIZE, y: (canvas.height / 2), }, 
+        { x: (canvas.width / 2) - SQUARE_SIZE * 2, y: canvas.height / 2, },
+        { x: (canvas.width / 2) - SQUARE_SIZE * 3, y: canvas.height / 2, }
     ],
     direction: 'right',
     moving: !isSettings,
@@ -61,8 +61,6 @@ const food = {
     x: 0,
     y: 0,
     color: settings['food_color'],
-    width: SQUARE_SIZE,
-    height: SQUARE_SIZE,
 }
 spawnNewFood();
 
@@ -97,7 +95,7 @@ function movements(direction) {
     if (direction == 'down') { 
         snake.body[0].y += SQUARE_SIZE;
 
-        if (snake.body[0].y + snake.body[0].height > canvas.height) {
+        if (snake.body[0].y + SQUARE_SIZE > canvas.height) {
             hardmode ? gameOver() : snake.body[0].y = 0;
         }
     }
@@ -111,7 +109,7 @@ function movements(direction) {
     if (direction == 'right') {
         snake.body[0].x += SQUARE_SIZE;
 
-        if (snake.body[0].x + snake.body[0].width > canvas.width) {
+        if (snake.body[0].x + SQUARE_SIZE > canvas.width) {
             hardmode ? gameOver() : snake.body[0].x = 0;
         }
     } 
@@ -301,10 +299,10 @@ function drawSnake() {
     for (let i = 0; i < snake.body.length; i++) {
         let part = snake.body[i]
         ctx.fillStyle = snake.color[i % snake.color.length];
-        ctx.fillRect(part.x, part.y, part.width, part.height);
+        ctx.fillRect(part.x, part.y, SQUARE_SIZE, SQUARE_SIZE);
         if (i == 0) drawSnakeHead(part);   
         if (hasStroke == 'on') {
-            ctx.strokeRect(part.x, part.y, part.width, part.height);
+            ctx.strokeRect(part.x, part.y, SQUARE_SIZE, SQUARE_SIZE);
         }
     }
 }
@@ -344,19 +342,19 @@ function drawSnakeHead(part) {
         }
     }
     if (hasStroke != 'on') {
-        ctx.strokeRect(part.x, part.y, part.width, part.height);
+        ctx.strokeRect(part.x, part.y, SQUARE_SIZE, SQUARE_SIZE);
     }
 }
 
 function drawFood() {
     ctx.fillStyle = food.color;
-    ctx.fillRect(food.x, food.y, food.width, food.height);
-    ctx.strokeRect(food.x, food.y, food.width, food.height);
+    ctx.fillRect(food.x, food.y, SQUARE_SIZE, SQUARE_SIZE);
+    ctx.strokeRect(food.x, food.y, SQUARE_SIZE, SQUARE_SIZE);
 
     // Decorations
     ctx.fillStyle = "green";
-    ctx.fillRect(food.x + (food.width / 2), food.y - PERC_SIZE, PERC_SIZE, PERC_SIZE);
-    ctx.fillRect(food.x + (food.width / 2) + PERC_SIZE, food.y - PERC_SIZE * 2, PERC_SIZE, PERC_SIZE);
+    ctx.fillRect(food.x + (SQUARE_SIZE/ 2), food.y - PERC_SIZE, PERC_SIZE, PERC_SIZE);
+    ctx.fillRect(food.x + (SQUARE_SIZE/ 2) + PERC_SIZE, food.y - PERC_SIZE * 2, PERC_SIZE, PERC_SIZE);
 }
 
 function drawScore() {
