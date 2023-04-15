@@ -2,6 +2,8 @@
 ## Description:
 Snake game made with JavaScript, HTML, CSS, Bootstrap and Flask. The game can be played with **w, a, s, d keys, the arrow keys or swiping** in the canvas. You can choose colors for the snake, the background, etc. in the settings menu, see previous scores in the scores menu and share or copy color schemes from other players. 
 
+# Live Game : https://ultimatesnake.pythonanywhere.com/
+
 ### This was for CS50:
 ## app.py and utils.py:
 Here we have the logic for the diferent menus that the game has and hadles the saving of the settings and scores and the access to the database with the color schemes submited.
